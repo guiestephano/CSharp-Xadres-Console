@@ -1,5 +1,6 @@
 ﻿using System;
 using tabuleiro;
+using xadrez_console;
 
 namespace xadres_console{
     class Program
@@ -7,6 +8,7 @@ namespace xadres_console{
         static void Main(string[] args) 
         {
             Tabuleiro tab = new Tabuleiro(8, 8);
+            Tela.ImprimirTabuleiro(tab);
         }
     }
 }
