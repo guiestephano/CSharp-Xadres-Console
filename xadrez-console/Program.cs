@@ -1,11 +1,12 @@
 ﻿using System;
+using tabuleiro;
 
 namespace xadres_console{
     class Program
     {
         static void Main(string[] args) 
         {
-            Console.WriteLine("Hello word!");
+            Tabuleiro tab = new Tabuleiro(8, 8);
         }
     }
-    }
+}
