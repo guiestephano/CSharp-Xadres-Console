@@ -17,12 +17,28 @@ namespace xadrez_console
                     }
                     else
                     {
-                        Console.Write(tabuleiro.GetPeca(i, j) + " ");
+                        ImprimirPeca(tabuleiro.GetPeca(i, j));
+                        Console.Write(" ");
                     }
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("  A B C D E F G H");
+            Console.WriteLine("  a b c d e f g h");
+        }
+
+        public static void ImprimirPeca(Peca peca)
+        {
+            if(peca.Cor == Cor.Branco)
+            {
+                Console.Write(peca);
+            }
+            else
+            {
+                ConsoleColor aux = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(peca);
+                Console.ForegroundColor = aux;
+            }
         }
     }
 }
