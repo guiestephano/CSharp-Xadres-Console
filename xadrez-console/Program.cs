@@ -8,11 +8,19 @@ namespace xadres_console{
     {
         static void Main(string[] args) 
         {
-            Tabuleiro tab = new Tabuleiro(8, 8);
+            try
+            {
+                Tabuleiro tab = new Tabuleiro(8, 8);
 
-            tab.ColocarPeca(new Torre(tab, Cor.Preto), new Posicao(0, 3));
-            tab.ColocarPeca(new Rei(tab, Cor.Preto), new Posicao(3, 4));
-            Tela.ImprimirTabuleiro(tab);
+                tab.ColocarPeca(new Torre(tab, Cor.Preto), new Posicao(0, 3));
+                tab.ColocarPeca(new Rei(tab, Cor.Preto), new Posicao(3, 4));
+                tab.ColocarPeca(new Torre(tab, Cor.Branco), new Posicao(4, 3));
+                Tela.ImprimirTabuleiro(tab);
+            }
+            catch(TabuleiroException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

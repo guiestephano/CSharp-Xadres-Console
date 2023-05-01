@@ -19,10 +19,49 @@ namespace tabuleiro
             return Pecas[linha, couluna];
         }
 
+        public Peca GetPeca(Posicao posicao)
+        {
+            return Pecas[posicao.Linha, posicao.Coluna];
+        }
+
+        public bool ExistePeca(Posicao posicao)
+        {
+            ValidarPosicao(posicao);
+            return GetPeca(posicao) != null;
+        }
+
         public void ColocarPeca(Peca p, Posicao pos)
         {
-            Pecas[pos.Linha, pos.Coluna] = p;
-            p.Posicao = pos;
+            if (!ExistePeca(pos))
+            {
+                Pecas[pos.Linha, pos.Coluna] = p;
+                p.Posicao = pos;
+            }
+            else
+            {
+                throw new TabuleiroException("Ja existe uma peça na posição: " + pos);
+            }
+            
+        }
+
+        public bool PosicaoValida(Posicao posicao)
+        {
+            if(posicao.Linha < 0 || posicao.Linha > Linhas || posicao.Coluna < 0 || posicao.Coluna > Colunas)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void ValidarPosicao(Posicao posicao)
+        {
+            if (!PosicaoValida(posicao))
+            {
+                throw new TabuleiroException("Posição invalida!");
+            }
         }
     }
 }
