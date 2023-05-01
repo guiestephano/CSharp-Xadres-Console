@@ -4,8 +4,8 @@ namespace tabuleiro
 {
     class Posicao
     {
-        int Linha { get; set; }
-        int Coluna { get; set; }
+        public int Linha { get; set; }
+        public int Coluna { get; set; }
 
         public Posicao (int linha, int coluna)
         {
