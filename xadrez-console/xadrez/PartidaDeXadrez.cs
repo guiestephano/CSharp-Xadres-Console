@@ -1,4 +1,5 @@
-﻿using tabuleiro;
+﻿using System.Data;
+using tabuleiro;
 using xadrez;
 
 namespace xadrez_console.xadrez
@@ -6,8 +7,8 @@ namespace xadrez_console.xadrez
     internal class PartidaDeXadrez
     {
         public Tabuleiro Tabuleiro { get; private set;}
-        private int Turno;
-        private Cor JogadorAtual;
+        public int Turno { get; private set; }
+        public Cor JogadorAtual { get; private set; }
         public bool PartidaTerminada;
 
         public PartidaDeXadrez()
@@ -19,12 +20,55 @@ namespace xadrez_console.xadrez
             PartidaTerminada = false;
         }
 
+        public void ValidarPosicaoOrigem(Posicao origem)
+        {
+            if(Tabuleiro.GetPeca(origem) == null)
+            {
+                throw new TabuleiroException("Não existe peça na posição de origem escolhida!");
+            }
+            if(Tabuleiro.GetPeca(origem).Cor != JogadorAtual)
+            {
+                throw new TabuleiroException("Peça de origem  escolhida não é sua!");
+            }
+            if (!Tabuleiro.GetPeca(origem).ExisteMovimentosPossiveis())
+            {
+                throw new TabuleiroException("Não existe movimentos possiveis para a peça de origem escolhida");
+            }
+        }
+
+        public void ValidarPosicaoDestino(Posicao origem, Posicao destino)
+        {
+            if (!Tabuleiro.GetPeca(origem).PodeMover(destino))
+            {
+                throw new TabuleiroException("Posição de destino inválida!");
+            }
+        }
+
         public void ExecutarMovimento(Posicao origem, Posicao destino)
         {
             Peca p = Tabuleiro.RetirarPeca(origem);
             p.IncrementarMovimento();
             Peca pecaCapturada = Tabuleiro.RetirarPeca(destino);
             Tabuleiro.ColocarPeca(p, destino);
+        }
+
+        public void RealizaJogada(Posicao origem, Posicao destino)
+        {
+            ExecutarMovimento(origem, destino);
+            Turno++;
+            MudarJogador();
+        }
+
+        private void MudarJogador()
+        {
+            if(JogadorAtual == Cor.Branco)
+            {
+                JogadorAtual = Cor.Preto;
+            }
+            else
+            {
+                JogadorAtual = Cor.Branco;
+            }
         }
 
         public PosicaoXadrez LerPosicaoXadrez()
