@@ -21,8 +21,18 @@ namespace xadres_console
                     Console.WriteLine();
                     Console.Write("Origem: ");
                     Posicao origem = partida.LerPosicaoXadrez().ToPosicao();
+                    Console.WriteLine(origem);
+                    Console.WriteLine(partida.Tabuleiro.GetPeca(origem));
+
+                   bool[,] posicoesPossiveis = partida.Tabuleiro.GetPeca(origem).MovimentosPossiveis();
+
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
+
                     Console.Write("Destino: ");
                     Posicao destino = partida.LerPosicaoXadrez().ToPosicao();
+                    Console.WriteLine();
+                    Console.WriteLine(destino);
 
                     partida.ExecutarMovimento(origem, destino);
                 }
