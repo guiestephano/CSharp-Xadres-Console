@@ -53,6 +53,8 @@ namespace xadres_console
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Tela.ImprimirPartida(partida);
 
 
             }
