@@ -1,17 +1,25 @@
 ﻿using tabuleiro;
+using xadrez_console.xadrez;
 
 namespace xadrez
 {
     internal class Rei : Peca
     {
-        public Rei(Tabuleiro tab, Cor cor) : base(tab, cor)
+        PartidaDeXadrez Partida;
+        public Rei(Tabuleiro tab, Cor cor,PartidaDeXadrez partida) : base(tab, cor)
         {
-
+            Partida = partida;
         }
 
         public override string ToString()
         {
             return "R";
+        }
+
+        private bool TesteTorreParaRoque(Posicao pos)
+        {
+            Peca peca = Tabuleiro.GetPeca(pos);
+            return peca != null && peca is Torre && peca.Cor == Cor && peca.QntMovimentos == 0;
         }
 
         private bool PodeMover(Posicao posicao)
@@ -81,6 +89,36 @@ namespace xadrez
             {
                 matriz[pos.Linha, pos.Coluna] = true;
             }
+
+            // # Jogada especial Roque
+            if (QntMovimentos == 0 && !Partida.Xeque)
+            {
+                // Roque pequeno
+                Posicao posT1 = new Posicao(Posicao.Linha, Posicao.Coluna + 3);
+                if (TesteTorreParaRoque(posT1))
+                {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna + 2);
+                    if(Tabuleiro.GetPeca(p1) == null && Tabuleiro.GetPeca(p2) == null)
+                    {
+                        matriz[Posicao.Linha, Posicao.Coluna + 2] = true;
+                    }
+                }
+
+                // Roque Grande
+                Posicao posT2 = new Posicao(Posicao.Linha, Posicao.Coluna - 4);
+                if (TesteTorreParaRoque(posT1))
+                {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna - 2);
+                    Posicao p3 = new Posicao(Posicao.Linha, Posicao.Coluna - 3);
+                    if (Tabuleiro.GetPeca(p1) == null && Tabuleiro.GetPeca(p2) == null && Tabuleiro.GetPeca(p3) == null)
+                    {
+                        matriz[Posicao.Linha, Posicao.Coluna - 2] = true;
+                    }
+                }
+            }
+            
 
             return matriz;
 

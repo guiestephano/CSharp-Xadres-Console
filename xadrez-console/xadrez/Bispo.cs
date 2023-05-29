@@ -28,7 +28,7 @@ namespace xadrez
             Posicao pos = new Posicao(0, 0);
 
             //Diagonal Esquerda cima
-            pos.DefinirValores(Posicao.Linha - 1, Posicao.Linha - 1);
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
             while(Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
