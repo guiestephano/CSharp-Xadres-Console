@@ -13,7 +13,7 @@ namespace xadrez
 
         public override string ToString()
         {
-            return "R";
+            return "\u2659";
         }
 
         private bool TesteTorreParaRoque(Posicao pos)
